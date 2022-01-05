@@ -1,11 +1,11 @@
 ---
-    Project: Capstone - Use Case Tracker
+    Project: Use Case Tracker
     Developer: Wes Vesprini
-    Date Updated: 12/30/2021
+    Date Updated: 1/04/2022
 ---
 
 
-# Wes8830 - CS50 Capstone
+# Wes8830 - Tacker project
 ## Description
 UseCase tracker is a series of separate django applications (Users and Tracker) aimed at tracking Use Cases, Products, Clients along different stages of the development lifecycle and additional Models as they're implemented. Once a Use Case, Product, or Client is created it can be searched for and modified so that end users of the application aren't duplicating efforts in silos. Statuses are provided for both the Product and Use Case models so that end users can also see how far along in the development cycle a given model is.This project's objective is geared toward Product professionals, Sales professionals, Consultant professionals and (eventually) engineers to track Use Cases, Clients and Products in a central location.
 
