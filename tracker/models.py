@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+
 # Create your models here.
 
 # Model for Client Tracking
@@ -19,6 +22,7 @@ class Client(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     client = models.CharField(max_length=32, unique=True)
     desc = models.CharField(blank=False, max_length=512, default='please enter a description')
+    notes = RichTextUploadingField(blank=True, null=True)
     link = models.URLField(max_length=1024)
 
     def __str__(self):

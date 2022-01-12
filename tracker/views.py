@@ -1,9 +1,10 @@
 import json
 from django.http import JsonResponse
-from django.shortcuts import render, HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from tracker.forms import ClientForm
 
 # Import Models from both applications
 from .models import Client, Product, Component, UseCase, UserStory, Product_UseCase, Product_Component, Client_Product, Client_UseCase
@@ -245,3 +246,15 @@ def delete_usecase(request):
 
     print(f'Deleted Product {usecase_id}')
     return JsonResponse("success", status=200, safe=False)
+
+# https://www.youtube.com/watch?v=L6y6cn1XUfw
+def add_form(request):
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            post_item = form.save(commit=False)
+            post_item.save()
+            return redirect('')
+    else:
+        form = ClientForm()
+    return render(request, 'form.html', {'form': form})

@@ -3,5 +3,5 @@
 asgiref==3.4.1
 certifi==2021.5.30
 Django==3.2.5
-django-editorjs==0.2.1
 sqlparse==0.4.2
+# ADD CKEDITOR

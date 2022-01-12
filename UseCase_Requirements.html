@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Objective</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body">
+        <hr>
+<pre><code>Project: Capstone - Use Case Profile
+Alias: UCPro
+Developer: Wes Vesprini
+Date Updated: 7/06/2021
+</code></pre>
+<hr>
+<h2 id="objective">Objective</h2>
+<p>Create an app allowing the build of use cases, clients and ultimately client profiles of those use cases</p>
+<h2 id="requirements">Requirements</h2>
+<h3 id="models">Models</h3>
+<ol>
+<li>Client
+<ol>
+<li>id</li>
+<li>name</li>
+<li>alias</li>
+<li>status (live, opportunity)</li>
+</ol>
+</li>
+<li>Use Case
+<ol>
+<li>id</li>
+<li>description</li>
+<li>status (live, queued, pending)</li>
+<li>clients</li>
+<li>original requests (foreign key)</li>
+<li>project_id</li>
+</ol>
+</li>
+<li>Original Request (These will be reviewed and linked to a use case)
+<ol>
+<li>id</li>
+<li>description</li>
+<li>use case (foreign key)</li>
+<li>status (supported, unsupported, not reviewed)</li>
+</ol>
+</li>
+<li>? User Story ?</li>
+<li>Comments
+<ol>
+<li>id</li>
+<li>user (foreign key)</li>
+<li>comment</li>
+<li>date</li>
+<li>time</li>
+<li>client</li>
+</ol>
+</li>
+<li>Product
+<ol>
+<li>id</li>
+<li>name</li>
+<li>group</li>
+</ol>
+</li>
+<li>Requriements</li>
+<li>? Test Cases ?</li>
+<li>Votes (should this be merged with Use Case itself?)
+<ol>
+<li>id</li>
+<li>use case (foreign key)</li>
+<li>upvotes</li>
+<li>downvotes</li>
+</ol>
+</li>
+<li>Project (compilation of unsupported Use Cases)
+<ol>
+<li>id</li>
+<li>name</li>
+</ol>
+</li>
+<li>User
+<ol>
+<li>id</li>
+<li>name</li>
+<li>email</li>
+<li>votes_cast</li>
+<li>requests_made</li>
+<li>supported_requests</li>
+<li>total_comments</li>
+</ol>
+</li>
+<li>Watchlist
+<ol>
+<li>id</li>
+<li></li>
+</ol>
+</li>
+</ol>
+
+    </body>
+    </html>
