@@ -21,7 +21,7 @@ def get_usecase_id():
 class Client(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     client = models.CharField(max_length=32, unique=True)
-    desc = models.CharField(blank=False, max_length=512, default='please enter a description')
+    desc = RichTextUploadingField(blank=False, max_length=512, default='please enter a description')
     notes = RichTextUploadingField(blank=True, null=True)
     link = models.URLField(max_length=1024)
 
@@ -49,7 +49,7 @@ class Product(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     product = models.CharField(max_length=32, unique=True)
-    desc = models.CharField(blank=False, max_length=512)
+    desc = RichTextUploadingField(blank=False, max_length=512)
     status = models.CharField(choices=Status.choices,blank=False, max_length=24, default='Concept')
     img = models.URLField(max_length=1024, blank=True)
 
@@ -87,7 +87,7 @@ class UseCase(models.Model):
     
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     use_case = models.CharField(max_length=32, unique=True)
-    desc = models.CharField(max_length=512)
+    desc = RichTextUploadingField(blank=False, max_length=512)
     doc = models.URLField(max_length=1024, blank=True)
     status = models.CharField(choices=Status.choices, max_length=24)
     

@@ -20,5 +20,9 @@ urlpatterns = [
     path("delete_client", views.delete_client, name="delete_client"),
     path("delete_usecase", views.delete_usecase, name="delete_usecase"),
     path("logout", user.logout_user, name="logout"),
-    path("add/form", views.add_form, name='add_form'),
+    
+    #Form Url Paths
+    path("product-form", views.productForm, name='productForm'),
+    path("client-form", views.clientForm, name='clientForm'),
+    path("usecase-form", views.usecaseForm, name='usecaseForm'),
 ]
