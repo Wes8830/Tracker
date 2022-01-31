@@ -27,7 +27,7 @@ SECRET_KEY = 'a80c@57$ow&qx9yj*2%a_b@(&x)kcn8cvueb!sxzmaoomo+4rp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -95,6 +95,11 @@ DATABASES = {
         'HOST': POSTGRES_HOST,
         'PORT': 5432,
     }
+    # COMMENT OUT when using Postgres. Otherwise invert your selection.
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR,'db.sqlite3')
+    # }
 }
 
 
