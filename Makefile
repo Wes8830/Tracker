@@ -15,3 +15,10 @@ compose-stop:
 
 compose-manage-py:
 	docker-compose run --rm $(options) website python manage.py $(cmd)
+
+# lists active containers. running 'docker ps -a' instead will show all containers inactive/active.
+list-containers:
+	docker ps
+
+remove-container:
+	docker rm $(container_id)

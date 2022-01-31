@@ -18,13 +18,18 @@ RUN apt-get update && \
 
 
 
-# Copy files docker image
+# Copy local files to docker image working directory /app/
 COPY requirements.txt ./requirements.txt
+# Installs dependencies
 RUN pip install -r requirements.txt
+# Copies Django project files so it can run inside docker container.
+# Alternatively, you may use 'COPY . .' to grab all files form the active Dir but this is nt desired in a Prod environment so that it can be kept lean. 
 COPY manage.py ./manage.py
 COPY tracker ./tracker
 COPY usecase ./usecase
 COPY users ./users
+# Data dump json was necessary to pre-populate the PostgreSQL DB with values.
+COPY datadump.json ./datadump.json
 
 # Expose port that the Application runs on.
 EXPOSE 8000
@@ -32,3 +37,5 @@ EXPOSE 8000
 FROM production as devel
 
 COPY . .
+
+

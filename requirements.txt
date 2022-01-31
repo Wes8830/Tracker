@@ -5,4 +5,13 @@ certifi==2021.5.30
 Django==3.2.5
 django-editorjs==0.2.1
 sqlparse==0.4.2
+
+# Installs PostgreSQL dependency
 psycopg2==2.8.6
+
+# Gunicorn is needed alongside nginx to serve up dynamic python web-applications
+# https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+gunicorn==20.1.0
+
+# docker image
+# nginx
