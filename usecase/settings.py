@@ -94,8 +94,7 @@ DATABASES = {
         'PASSWORD': POSTGRES_PASSWORD,
         'HOST': POSTGRES_HOST,
         'PORT': 5432,
-    },
-
+    }
     # COMMENT OUT when using Postgres. Otherwise invert your selection.
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',

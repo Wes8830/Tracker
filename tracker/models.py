@@ -82,7 +82,7 @@ class UseCase(models.Model):
         LIVE = 'Live'
     
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
-    use_case = models.CharField(max_length=32, unique=True)
+    use_case = models.CharField(max_length=100, unique=True)
     desc = models.CharField(max_length=512)
     doc = models.URLField(max_length=1024, blank=True)
     status = models.CharField(choices=Status.choices, max_length=24)
