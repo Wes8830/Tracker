@@ -14,7 +14,7 @@ compose-stop:
 	docker-compose down --remove-orphans $(options)
 
 compose-manage-py:
-	docker-compose run --rm $(options) website python manage.py $(cmd)
+	docker-compose run --rm $(options) web python manage.py $(cmd)
 
 # lists active containers. running 'docker ps -a' instead will show all containers inactive/active.
 list-containers:
@@ -22,3 +22,7 @@ list-containers:
 
 remove-container:
 	docker rm $(container_id)
+
+# Get Datadump from postgres
+dump-data:
+	docker exec -u postgres tracker_postgres_1 pg_dump > $(name)

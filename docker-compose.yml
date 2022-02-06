@@ -1,52 +1,115 @@
+# Docker Compose - stitches multiple Containers together. 
+
+  
+# Postgres is a separate container from the Django app but they need to speak to one another.
+
+
 # Set Up Help: https://www.youtube.com/watch?v=ZJ33N3ABIa0
 version: "3.7"
 
-x-database-variables: &database-variables
-  POSTGRES_DB: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
+# Add Variables for sensitive info which can then reference a .env file
+#
+# x-database-variables: &database-variables
+#   POSTGRES_DB: postgres
+#   POSTGRES_USER: postgres
+#   POSTGRES_PASSWORD: postgres
 
-x-app-variables: &app-variables
-  <<: *database-variables
-  POSTGRES_HOST: postgres
+# Add Variables for sensitive info which can then reference a .env file
+#
+# x-app-variables: &app-variables
+#   <<: *database-variables
+#   POSTGRES_HOST: postgres
 
 services:
-  website:
-    image: tracker-website:latest
-    # https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#gunicorn
-    command: gunicorn usecase.wsgi:application --bind 0.0.0.0:8000
-    # command: python manage.py runserver 0.0.0.0:8000
-    environment: *app-variables
-    depends_on:
-      - db_migrate
-    expose:
-      - 8000
-    # ports: 
-    #   - "8000:8000"
-
-  db_migrate:
-    image: tracker-website:latest
-    command: python manage.py migrate
-    environment: *app-variables
-    depends_on:
-      - postgres
-
-  postgres:
-      image: postgres
-      ports:
-        - "5432:5432"
-      environment: *database-variables
-      volumes:
-        - db-data:/var/lib/postgresql/data
-
   # Set up nginx to act as a Reverse Proxy for Gunicorn to handle client requests and serve up static files
   # https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#nginx
+  # To fully build the Nginx container, you need special Docker and conf files for it.
+  # Create 'nginx' folder in parent directory and create a Dockerfile within it
+
   nginx:
-    build: ./nginx
-    ports:
-      - 1337:80
+    image: nginx:latest
+    # locate your container name with '$docker ps -a' or without the '-a'for active containers.
+    container_name: tracker-nginx01
+    ports: 
+      - "8000:8000"
+    volumes:
+      - ./src:/src
+      - ./config/nginx:/etc/nginx/conf.d
+      - /static:/static
     depends_on:
-      - website
+      - web
+
+  web:
+    # Mounts Source directory into this and exposes port 8000
+    build: .
+    # locate your container name with '$docker ps -a' or without the '-a'for active containers.
+    container_name: tracker-django-unicorn01
+    # https://ruddra.com/docker-django-nginx-postgres/
+    
+    # command can be moved to Dockerfile's CMD line. It's the same
+    #
+    # command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn usecase.wsgi -b 0.0.0.0:8000"
+    
+    # To Run App Locally, not in docker container.
+    # command: python manage.py runserver 0.0.0.0:8000
+    
+    # Points to .env file in parent directory. Defines Ports for APP, DB, DB_HOST ALLOWED_HOSTS, and some database variables such as POSTRES_USER
+    # Seems like an override to some Settings.py definitions and would be useful for Production/Development controll.
+    #
+    # env_file:
+    #   - .env
+     
+    # environment: *app-variables
+
+    volumes:
+      - ./src:/src
+      - /static:/static
+    
+    expose:
+      - "8000"
+   
+    # ports: 
+    #   - "8000:8000"
+   
+    restart: always
+    depends_on:
+      - db
+
+  db:
+      image: postgres
+      container_name: tracker-postgres01
+      expose: 
+        - "5432"
+
+      # default ports are 5432
+      #
+      # ports:
+      #   - "5432:5432"
+      #
+      # environment: *database-variables
+
+      # Defaults values for username and password are both 'postgres' so this section isn't needed 
+      # https://hub.docker.com/_/postgres -> Ctrl+F 'default'
+      #
+      environment: 
+        - POSTGRES_NAME=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+
+        # DANGER! Not for Production use. It is not recommended.
+        - POSTGRES_HOST_AUTH_METHOD=trust
+      #   - POSTGRES_DB=${DB_NAME}
+      #   # Default for PGPORT is /var/lib/postgresql/data
+      #   - PGPORT=${DB_PORT}
+      #   - POSTGRES_HOST=${DB_HOST}
+      
+      # volumes allow data to persist beyond the life of the docker container
+      #
+      # volumes:
+      # - db-data:/var/lib/postgresql/data
+
+
+
 
 
 # To Persist data beyond the life of the docker container we need to create a volume.This 'db-data' volume will bind 'postgres' service
