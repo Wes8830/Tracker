@@ -11,7 +11,9 @@ compose-start:
 	docker-compose up --remove-orphans $(options)
 
 compose-stop:
-	docker-compose down --remove-orphans $(options)
+	docker-compose stop --remove-orphans $(options)
+
+# docker-compose down on the other hand will remove the container which may not be desired.
 
 compose-manage-py:
 	docker-compose run --rm $(options) web python manage.py $(cmd)

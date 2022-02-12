@@ -30,6 +30,8 @@ services:
     image: nginx:latest
     # locate your container name with '$docker ps -a' or without the '-a'for active containers.
     container_name: tracker-nginx01
+    
+    # <host port>:<container port>
     ports: 
       - "8000:8000"
     volumes:
@@ -65,6 +67,7 @@ services:
       - ./src:/src
       - /static:/static
     
+    # <host port>:<container port>
     expose:
       - "8000"
    
@@ -105,11 +108,8 @@ services:
       
       # volumes allow data to persist beyond the life of the docker container
       #
-      # volumes:
-      # - db-data:/var/lib/postgresql/data
-
-
-
+      volumes:
+      - db-data:/var/lib/postgresql/data
 
 
 # To Persist data beyond the life of the docker container we need to create a volume.This 'db-data' volume will bind 'postgres' service
